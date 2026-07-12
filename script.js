@@ -1,353 +1,1124 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+/*
+ * CAMBIA ESTE NÚMERO POR EL WHATSAPP REAL DE LUXURY HAIR.
+ * Formato: código de país + número, sin +, espacios ni guiones.
+ * Ejemplo México: 5215512345678
+ */
+const WHATSAPP_NUMBER = "529983666675";
 
-    <title>Luxury Hair | Terapia Capilar Profesional</title>
-    <meta name="description" content="Keratinas, alisados, tratamientos capilares, kits profesionales y productos para estilistas y uso personal. Envíos a toda la República Mexicana.">
-    <meta name="theme-color" content="#111111">
+const FALLBACK_IMAGE = "placeholder.svg";
 
-    <meta property="og:title" content="Luxury Hair | Terapia Capilar Profesional">
-    <meta property="og:description" content="Productos profesionales para estilistas y para quienes buscan resultados de salón desde casa.">
-    <meta property="og:type" content="website">
+const products = [
+    {
+        id: 1,
+        name: "Sérum en Spray",
+        slug: "serum-en-spray",
+        category: "cremas",
+        categoryLabel: "Cremas y sérums",
+        presentation: "125 ml",
+        image: "01-serum-en-spray.jpg",
+        description: "Finalizador profesional que ayuda a controlar el frizz, aportar brillo y proteger la fibra capilar.",
+        prices: [
+            { label: "Precio normal", value: "$280" },
+            { label: "Mayoreo (4+ piezas)", value: "$200" }
+        ],
+        benefits: [
+            "Finaliza tratamientos químicos",
+            "Ayuda a controlar el frizz",
+            "Aporta brillo inmediato",
+            "Sella la cutícula",
+            "Facilita el peinado"
+        ],
+        ideal: [
+            "Cabello con alaciados, tintes, decoloraciones o permanentes",
+            "Uso diario en casa o salón"
+        ],
+        badge: "Popular"
+    },
+    {
+        id: 2,
+        name: "Crema de Peinar",
+        slug: "crema-de-peinar",
+        category: "cremas",
+        categoryLabel: "Cremas y sérums",
+        presentation: "300 ml",
+        image: "02-crema-peinar.jpg",
+        description: "Crema de uso diario para hidratar, facilitar el peinado y ayudar a reducir el frizz.",
+        prices: [
+            { label: "Precio normal", value: "$280" },
+            { label: "Media docena", value: "$600" },
+            { label: "Docena", value: "$1,100" }
+        ],
+        benefits: [
+            "Mantiene hidratado el cabello",
+            "Facilita el peinado",
+            "Ayuda a reducir el frizz",
+            "Protege del calor de secadora y plancha",
+            "Ayuda a conservar el brillo"
+        ],
+        ideal: [
+            "Uso diario",
+            "Cabello con procesos químicos",
+            "Todo tipo de cabello",
+            "Aplicación en cabello limpio y húmedo"
+        ],
+        note: "Aromas disponibles: Uva, Fresa, Chocolate, Durazno, Sandía perfumada, Plátano, Bebé, La Vida Es Bella, Paris Hilton y Katy Perry.",
+        variantLabel: "Elige el aroma",
+        variantMessageLabel: "aroma",
+        variantSummary: "11 aromas disponibles",
+        variants: [
+                    { label: "Uva", presentation: "300 ml · Aroma Uva", image: "02-crema-peinar.jpg" },
+                    { label: "Fresa", presentation: "300 ml · Aroma Fresa", image: "02-crema-peinar.jpg" },
+                    { label: "Chocolate", presentation: "300 ml · Aroma Chocolate", image: "02-crema-peinar.jpg" },
+                    { label: "Durazno", presentation: "300 ml · Aroma Durazno", image: "02-crema-peinar.jpg" },
+                    { label: "Sandía", presentation: "300 ml · Aroma Sandía", image: "02-crema-peinar.jpg" },
+                    { label: "Plátano", presentation: "300 ml · Aroma Plátano", image: "02-crema-peinar.jpg" },
+                    { label: "Bebé", presentation: "300 ml · Aroma Bebé", image: "02-crema-peinar.jpg" },
+                    { label: "La Vida es Bella", presentation: "300 ml · Aroma La Vida es Bella", image: "02-crema-peinar.jpg" },
+                    { label: "Paris Hilton", presentation: "300 ml · Aroma Paris Hilton", image: "02-crema-peinar.jpg" },
+                    { label: "Katy Perry", presentation: "300 ml · Aroma Katy Perry", image: "02-crema-peinar.jpg" },
+                    { label: "Mora", presentation: "300 ml · Aroma Mora", image: "02-crema-peinar.jpg" }
+        ]
+    },
+    {
+        id: 3,
+        name: "Kit de Crecimiento",
+        slug: "kit-de-crecimiento",
+        category: "kits",
+        categoryLabel: "Kits profesionales",
+        presentation: "Shampoo + tónico",
+        image: "03-kit-crecimiento.jpg",
+        description: "Rutina de shampoo y tónico para fortalecer el cabello y cuidar el cuero cabelludo.",
+        prices: [
+            { label: "Precio normal", value: "$680" },
+            { label: "Mayoreo (4+ kits)", value: "$380" }
+        ],
+        benefits: [
+            "Ayuda a estimular el crecimiento",
+            "Fortalece el folículo",
+            "Ayuda a reducir la caída",
+            "Nutre el cuero cabelludo",
+            "Aporta hidratación"
+        ],
+        ideal: [
+            "Cabello débil",
+            "Personas con caída del cabello",
+            "Crecimiento lento"
+        ],
+        badge: "Más vendido"
+    },
+    {
+        id: 4,
+        name: "Kit Post Alisado",
+        slug: "kit-post-alisado",
+        category: "kits",
+        categoryLabel: "Kits profesionales",
+        presentation: "Mantenimiento",
+        image: "04-kit-post-alisado.jpg",
+        description: "Rutina de mantenimiento para ayudar a prolongar los resultados de un alisado.",
+        prices: [
+            { label: "Precio normal", value: "$550" },
+            { label: "3 kits", value: "$310 c/u" },
+            { label: "5 kits", value: "$280 c/u" }
+        ],
+        benefits: [
+            "Ayuda a mantener el alaciado",
+            "Restablece el pH",
+            "Hidrata",
+            "Ayuda a prolongar el tratamiento",
+            "Protege del calor"
+        ],
+        ideal: [
+            "Cabello con alaciado progresivo"
+        ]
+    },
+    {
+        id: 5,
+        name: "Kit Rizos Perfectos",
+        slug: "kit-para-rizos",
+        category: "kits",
+        categoryLabel: "Kits profesionales",
+        presentation: "Shampoo + acondicionador",
+        image: "05-kit-rizos.jpg",
+        description: "Rutina para hidratar, definir y mantener el patrón natural del cabello rizado u ondulado.",
+        prices: [
+            { label: "Precio normal", value: "$550" },
+            { label: "3 kits", value: "$310 c/u" },
+            { label: "5 kits", value: "$280 c/u" }
+        ],
+        benefits: [
+            "Ayuda a definir los rizos",
+            "Hidrata profundamente",
+            "Controla el frizz",
+            "Devuelve elasticidad",
+            "Nutre el cabello"
+        ],
+        ideal: [
+            "Cabello rizado",
+            "Cabello ondulado"
+        ]
+    },
+    {
+        id: 6,
+        name: "Kit de Muestra",
+        slug: "kit-de-muestra",
+        category: "kits",
+        categoryLabel: "Kits profesionales",
+        presentation: "Línea alisante completa",
+        image: "20-kit-muestra.jpg",
+        description: "Presentación pensada para conocer y probar una línea alisante profesional completa.",
+        prices: [
+            { label: "Kit completo", value: "$1,850" }
+        ],
+        benefits: [
+            "Línea alisante completa",
+            "Presentación de prueba profesional",
+            "Permite conocer distintos productos de la línea"
+        ],
+        ideal: [
+            "Estilistas que desean probar la línea"
+        ]
+    },
+    {
+        id: 7,
+        name: "Hiperlux 6",
+        slug: "hiperlux-6",
+        category: "alisados",
+        categoryLabel: "Alisados profesionales",
+        presentation: "Alisado en espuma · 1 L",
+        image: "07-hiperlux-6.jpg",
+        description: "Alisado progresivo en espuma para reducir volumen y frizz con acabado brillante.",
+        prices: [
+            { label: "Precio", value: "$2,800" }
+        ],
+        benefits: [
+            "Alisa progresivamente",
+            "Reduce el frizz",
+            "Aporta brillo intenso",
+            "Ayuda a reparar e hidratar",
+            "Puede dejar el cabello lacio hasta un 99%"
+        ],
+        ideal: [
+            "Uso profesional",
+            "Personas que buscan alaciado progresivo"
+        ],
+        note: "Duración indicada de 5 a 7 meses. Libre de formol y con lavado inmediato, según la información proporcionada.",
+        badge: "Profesional"
+    },
+    {
+        id: 8,
+        name: "Afroliss",
+        slug: "afroliss",
+        category: "alisados",
+        categoryLabel: "Alisados profesionales",
+        presentation: "Alisado progresivo · 1 L",
+        image: "08-afroliss.jpg",
+        description: "Tratamiento progresivo orientado a cabello afro, grueso o muy resistente.",
+        prices: [
+            { label: "Precio", value: "$2,300" }
+        ],
+        benefits: [
+            "Alisa cabello afro o muy resistente",
+            "Ayuda a controlar el volumen",
+            "Reduce el frizz",
+            "Nutre e hidrata"
+        ],
+        ideal: [
+            "Cabello grueso",
+            "Cabello afro",
+            "Cabello muy rebelde"
+        ],
+        note: "Puede lograr un lacio de hasta 99% y una duración de hasta 8 meses, según la información proporcionada."
+    },
+    {
+        id: 9,
+        name: "Alisado Permanente + Neutralizante",
+        slug: "alaciado-permanente",
+        category: "alisados",
+        categoryLabel: "Alisados profesionales",
+        presentation: "Kit profesional",
+        image: "09-alaciado-permanente.jpg",
+        description: "Sistema profesional que modifica la estructura del cabello para lograr un alaciado permanente.",
+        prices: [
+            { label: "Precio", value: "$1,850" }
+        ],
+        benefits: [
+            "Alaciado permanente",
+            "Acabado lacio",
+            "Aporta brillo",
+            "Aporta suavidad"
+        ],
+        ideal: [
+            "Cabello virgen",
+            "Cabello resistente"
+        ],
+        note: "No recomendado para cabello decolorado o con procesos químicos previos. Requiere aplicación profesional."
+    },
+    {
+        id: 10,
+        name: "Alisado Hidrogel",
+        slug: "alisado-hidrogel",
+        category: "alisados",
+        categoryLabel: "Alisados profesionales",
+        presentation: "1 L / 500 ml",
+        image: "10-alisado-hidrogel.jpg",
+        description: "Alisado profesional para reducir el frizz y dejar el cabello suave y brillante.",
+        prices: [
+            { label: "1 litro", value: "$2,300" },
+            { label: "500 ml", value: "$1,500" }
+        ],
+        benefits: [
+            "Alisado indicado de 90 a 95%",
+            "Reduce el frizz",
+            "Aporta brillo intenso",
+            "Deja el cabello suave y sedoso",
+            "Lavado inmediato después de la aplicación"
+        ],
+        ideal: [
+            "Cabello resistente"
+        ],
+        variantLabel: "Elige la presentación",
+        variantMessageLabel: "presentación",
+        variantSummary: "2 presentaciones disponibles",
+        variants: [
+                    { label: "1 litro", presentation: "1 litro", image: "10-alisado-hidrogel.jpg", price: "$2,300" },
+                    { label: "500 ml", presentation: "500 ml", image: "10-alisado-hidrogel-500.jpg", price: "$1,500" }
+        ]
+    },
+    {
+        id: 11,
+        name: "Keratina Japonesa",
+        slug: "keratina-japonesa",
+        category: "keratinas",
+        categoryLabel: "Keratinas premium",
+        presentation: "1 L / 500 ml",
+        image: "11-keratina-japonesa.jpg",
+        description: "Keratina profesional para alisar, hidratar y reducir el frizz con movimiento natural.",
+        prices: [
+            { label: "1 litro", value: "$2,300" },
+            { label: "500 ml", value: "$1,500" }
+        ],
+        benefits: [
+            "Alisado indicado de 90 a 95%",
+            "Hidrata profundamente",
+            "Reduce el frizz",
+            "Aporta brillo y movimiento natural",
+            "Protege la fibra capilar con inhibidor"
+        ],
+        ideal: [
+            "Todo tipo de cabello resistente"
+        ],
+        variantLabel: "Elige la presentación",
+        variantMessageLabel: "presentación",
+        variantSummary: "2 presentaciones disponibles",
+        variants: [
+                    { label: "1 litro", presentation: "1 litro", image: "11-keratina-japonesa.jpg", price: "$2,300" },
+                    { label: "500 ml", presentation: "500 ml", image: "11-keratina-japonesa.jpg", price: "$1,500" }
+        ]
+    },
+    {
+        id: 12,
+        name: "Keratina Brasileña",
+        slug: "keratina-brasilena",
+        category: "keratinas",
+        categoryLabel: "Keratinas premium",
+        presentation: "1 L / 500 ml",
+        image: "12-keratina-brasilena.jpg",
+        description: "Keratina para disminuir el frizz y mantener un acabado suave en cabello procesado.",
+        prices: [
+            { label: "1 litro", value: "$2,500" },
+            { label: "500 ml", value: "$1,500" }
+        ],
+        benefits: [
+            "Alisado indicado de 80 a 90%",
+            "Disminuye el frizz",
+            "Ayuda a mantener el pH equilibrado",
+            "Lavado inmediato",
+            "No contiene formol, según la información proporcionada"
+        ],
+        ideal: [
+            "Cabello decolorado",
+            "Cabello con mechas",
+            "Cabello tinturado"
+        ],
+        variantLabel: "Elige la presentación",
+        variantMessageLabel: "presentación",
+        variantSummary: "2 presentaciones disponibles",
+        variants: [
+                    { label: "1 litro", presentation: "1 litro", image: "12-keratina-brasilena.jpg", price: "$2,500" },
+                    { label: "500 ml", presentation: "500 ml", image: "12-keratina-brasilena.jpg", price: "$1,500" }
+        ]
+    },
+    {
+        id: 13,
+        name: "Keratina Marroquí Ultra",
+        slug: "keratina-marroqui-ultra",
+        category: "keratinas",
+        categoryLabel: "Keratinas premium",
+        presentation: "1 L / 500 ml",
+        image: "14-keratina-marroqui.jpg",
+        description: "Keratina de alto desempeño para cabello ondulado o rizado resistente.",
+        prices: [
+            { label: "1 litro", value: "$2,300" },
+            { label: "500 ml", value: "$1,500" }
+        ],
+        benefits: [
+            "Alisado indicado de 95 a 98%",
+            "Reduce el frizz",
+            "Aporta brillo intenso",
+            "Hidrata",
+            "Lavado inmediato"
+        ],
+        ideal: [
+            "Cabello ondulado resistente",
+            "Cabello rizado resistente"
+        ],
+        note: "Duración aproximada indicada de 5 a 6 meses.",
+        badge: "Premium",
+        variantLabel: "Elige la presentación",
+        variantMessageLabel: "presentación",
+        variantSummary: "2 presentaciones disponibles",
+        variants: [
+                    { label: "1 litro", presentation: "1 litro · Ultra", image: "14-keratina-marroqui.jpg", price: "$2,300", displayName: "Keratina Marroquí Ultra" },
+                    { label: "500 ml", presentation: "500 ml", image: "14-keratina-marroqui-500.jpg", price: "$1,500", displayName: "Keratina Marroquí" }
+        ]
+    },
+    {
+        id: 14,
+        name: "Encerado Capilar",
+        slug: "encerado-capilar",
+        category: "tratamientos",
+        categoryLabel: "Tratamientos especializados",
+        presentation: "1 L / 500 ml",
+        image: "06-encerado-capilar.jpg",
+        description: "Tratamiento nutritivo para cabello seco, maltratado o procesado químicamente.",
+        prices: [
+            { label: "1 litro", value: "$1,500" },
+            { label: "500 ml", value: "$1,000" }
+        ],
+        benefits: [
+            "Hidrata profundamente",
+            "Ayuda a reponer lípidos",
+            "Nutre el cabello",
+            "Devuelve brillo",
+            "Mejora la suavidad"
+        ],
+        ideal: [
+            "Cabello seco",
+            "Cabello maltratado",
+            "Cabello con procesos químicos"
+        ],
+        note: "Este producto no alisa.",
+        variantLabel: "Elige la presentación",
+        variantMessageLabel: "presentación",
+        variantSummary: "2 presentaciones disponibles",
+        variants: [
+                    { label: "1 litro", presentation: "1 litro", image: "06-encerado-capilar.jpg", price: "$1,500" },
+                    { label: "500 ml", presentation: "500 ml", image: "06-encerado-capilar.jpg", price: "$1,000" }
+        ]
+    },
+    {
+        id: 15,
+        name: "Mascarilla Cierre Técnico",
+        slug: "mascarilla-cierre-tecnico",
+        category: "tratamientos",
+        categoryLabel: "Tratamientos especializados",
+        presentation: "1 litro",
+        image: "13-mascarilla-cierre.jpg",
+        description: "Mascarilla para finalizar procesos químicos y ayudar a restablecer el equilibrio del cabello.",
+        prices: [
+            { label: "Precio", value: "$550" }
+        ],
+        benefits: [
+            "Ayuda a cerrar la cutícula",
+            "Ayuda a restaurar el pH",
+            "Hidrata",
+            "Reduce el frizz",
+            "Aumenta el brillo",
+            "Ayuda a prolongar resultados"
+        ],
+        ideal: [
+            "Después de procesos químicos",
+            "Mantenimiento de tratamientos capilares"
+        ]
+    },
+    {
+        id: 16,
+        name: "Cirugía Capilar",
+        slug: "cirugia-capilar",
+        category: "tratamientos",
+        categoryLabel: "Tratamientos especializados",
+        presentation: "1 L / 500 ml",
+        image: "17-cirugia-capilar.jpg",
+        description: "Tratamiento de reparación e hidratación profunda para cabello dañado o procesado.",
+        prices: [
+            { label: "1 litro", value: "$1,500" },
+            { label: "500 ml", value: "$1,000" }
+        ],
+        benefits: [
+            "Ayuda a reparar la fibra capilar",
+            "Hidrata profundamente",
+            "Devuelve elasticidad",
+            "Fortalece el cabello",
+            "Reduce el frizz"
+        ],
+        ideal: [
+            "Cabello dañado",
+            "Cabello procesado químicamente",
+            "Todo tipo de cabello"
+        ],
+        variantLabel: "Elige la presentación",
+        variantMessageLabel: "presentación",
+        variantSummary: "2 presentaciones disponibles",
+        variants: [
+                    { label: "1 litro", presentation: "1 litro", image: "17-cirugia-capilar.jpg", price: "$1,500" },
+                    { label: "500 ml", presentation: "500 ml", image: "17-cirugia-capilar.jpg", price: "$1,000" }
+        ]
+    },
+    {
+        id: 17,
+        name: "Botox Curly",
+        slug: "botox-curly",
+        category: "tratamientos",
+        categoryLabel: "Tratamientos especializados",
+        presentation: "1 L / 500 ml",
+        image: "16-botox-curly.jpg",
+        description: "Tratamiento reparador e hidratante para conservar y definir el patrón natural del rizo.",
+        prices: [
+            { label: "1 litro", value: "$2,200" },
+            { label: "500 ml", value: "$1,500" }
+        ],
+        benefits: [
+            "Ayuda a reparar el cabello rizado",
+            "Hidrata profundamente",
+            "Define los rizos",
+            "Controla el frizz",
+            "Aporta brillo y elasticidad",
+            "Fortalece la fibra capilar"
+        ],
+        ideal: [
+            "Rizos tipo 3, 3B y 3C",
+            "Cabello afro"
+        ],
+        note: "No alisa; conserva el patrón natural del rizo.",
+        variantLabel: "Elige la presentación",
+        variantMessageLabel: "presentación",
+        variantSummary: "2 presentaciones disponibles",
+        variants: [
+                    { label: "1 litro", presentation: "1 litro", image: "16-botox-curly.jpg", price: "$2,200" },
+                    { label: "500 ml", presentation: "500 ml", image: "16-botox-curly.jpg", price: "$1,500" }
+        ]
+    },
+    {
+        id: 18,
+        name: "Shampoo Limpieza Profunda",
+        slug: "shampoo-limpieza-profunda",
+        category: "tratamientos",
+        categoryLabel: "Tratamientos especializados",
+        presentation: "1 litro",
+        image: "15-shampoo-limpieza.jpg",
+        description: "Shampoo preparador para retirar residuos antes de tratamientos profesionales.",
+        prices: [
+            { label: "Precio", value: "$280" }
+        ],
+        benefits: [
+            "Elimina residuos de productos",
+            "Ayuda a retirar aceites, siliconas e impurezas",
+            "Abre ligeramente la cutícula",
+            "Prepara para alisados y reconstrucciones",
+            "Mejora la penetración de tratamientos"
+        ],
+        ideal: [
+            "Preparación previa a procesos profesionales"
+        ]
+    },
+    {
+        id: 19,
+        name: "Nanoplastia Molecular",
+        slug: "nanoplastia-molecular",
+        category: "tratamientos",
+        categoryLabel: "Tratamientos especializados",
+        presentation: "500 ml",
+        image: "18-nanoplastia-molecular.jpg",
+        description: "Tratamiento molecular orientado a mejorar la apariencia, suavidad y brillo del cabello.",
+        prices: [
+            { label: "Precio", value: "$580" }
+        ],
+        benefits: [
+            "Reparación capilar",
+            "Brillo intenso",
+            "Suavidad excepcional"
+        ],
+        ideal: [
+            "Cabello que necesita mejorar suavidad y apariencia"
+        ]
+    },
+    {
+        id: 20,
+        name: "Plancha Moonstyle",
+        slug: "plancha-moonstyle",
+        category: "herramientas",
+        categoryLabel: "Herramientas profesionales",
+        presentation: "Herramienta profesional",
+        image: "19-plancha-moonstyle.jpg",
+        description: "Plancha profesional para apoyar procesos de estilizado y acabados de salón.",
+        prices: [
+            { label: "Precio", value: "$2,500" }
+        ],
+        benefits: [
+            "Herramienta profesional",
+            "Acabado premium",
+            "Tecnología avanzada"
+        ],
+        ideal: [
+            "Estilistas",
+            "Uso profesional"
+        ],
+        badge: "Herramienta"
+    }
+];
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+const state = {
+    search: "",
+    category: "todos"
+};
 
-    <link rel="icon" type="image/png" href="logo-luxury-hair.png">
-    <meta property="og:image" content="logo-luxury-hair.png">
+const elements = {
+    grid: document.getElementById("productsGrid"),
+    search: document.getElementById("buscar"),
+    filterButtons: document.getElementById("filterButtons"),
+    counter: document.getElementById("productCounter"),
+    emptyState: document.getElementById("emptyState"),
+    modal: document.getElementById("productModal"),
+    modalImage: document.getElementById("modalImage"),
+    modalBadge: document.getElementById("modalBadge"),
+    modalCategory: document.getElementById("modalCategory"),
+    modalTitle: document.getElementById("modalTitle"),
+    modalPresentation: document.getElementById("modalPresentation"),
+    modalDescription: document.getElementById("modalDescription"),
+    modalPrices: document.getElementById("modalPrices"),
+    modalBenefits: document.getElementById("modalBenefits"),
+    modalIdealSection: document.getElementById("modalIdealSection"),
+    modalIdeal: document.getElementById("modalIdeal"),
+    modalNote: document.getElementById("modalNote"),
+    modalWhatsapp: document.getElementById("modalWhatsapp"),
+    menu: document.getElementById("menu"),
+    menuBtn: document.getElementById("menuBtn"),
+    header: document.getElementById("header"),
+    backToTop: document.getElementById("backToTop")
+};
 
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
+function normalizeText(value) {
+    return value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
 
-<body>
-    <a class="skip-link" href="#productos">Saltar al catálogo</a>
+function whatsappUrl(message) {
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 
-    <header class="site-header" id="header">
-        <div class="container header-inner">
-            <a href="#inicio" class="logo brand-link" aria-label="Luxury Hair, ir al inicio">
-                <img src="logo-luxury-hair-horizontal.png" alt="Luxury Hair Terapia Capilar">
-            </a>
+function setGlobalWhatsappLinks() {
+    const generalMessage = "Hola Luxury Hair, me gustaría recibir información sobre sus productos.";
+    const wholesaleMessage = "Hola Luxury Hair, me interesa conocer los precios de mayoreo y armar un pedido.";
 
-            <nav class="main-nav" id="menu" aria-label="Navegación principal">
-                <a href="#inicio">Inicio</a>
-                <a href="#productos">Productos</a>
-                <a href="#mayoreo">Mayoreo</a>
-                <a href="#nosotros">Nosotros</a>
-                <a href="#preguntas">Preguntas</a>
-                <a href="#contacto">Contacto</a>
-            </nav>
+    document.querySelectorAll("[data-whatsapp-general]").forEach(link => {
+        link.href = whatsappUrl(generalMessage);
+    });
 
-            <a class="header-whatsapp" data-whatsapp-general target="_blank" rel="noopener noreferrer">
-                WhatsApp
-            </a>
+    document.querySelectorAll("[data-whatsapp-wholesale]").forEach(link => {
+        link.href = whatsappUrl(wholesaleMessage);
+    });
+}
 
-            <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+function productWhatsappMessage(product) {
+    return `Hola Luxury Hair, me interesa ${product.name} (${product.presentation}). ¿Me puedes dar más información y confirmar disponibilidad?`;
+}
+
+function priceLinesTemplate(prices, modal = false) {
+    const className = modal ? "modal-price-line" : "price-line";
+
+    return prices.map(price => `
+        <div class="${className}">
+            <span>${price.label}</span>
+            <strong>${price.value}</strong>
         </div>
-    </header>
+    `).join("");
+}
 
-    <main>
-        <section class="hero" id="inicio">
-            <div class="hero-glow hero-glow-one"></div>
-            <div class="hero-glow hero-glow-two"></div>
-
-            <div class="container hero-grid">
-                <div class="hero-copy reveal">
-                    <span class="eyebrow">Terapia capilar profesional</span>
-                    <h1>Resultados de salón, cuidados desde casa.</h1>
-                    <p>
-                        Keratinas, alisados, kits y tratamientos profesionales para estilistas
-                        y para quienes buscan transformar su cabello.
-                    </p>
-
-                    <div class="hero-actions">
-                        <a href="#productos" class="btn btn-dark">Ver catálogo</a>
-                        <a data-whatsapp-general target="_blank" rel="noopener noreferrer" class="btn btn-light">
-                            Hablar por WhatsApp
-                        </a>
-                    </div>
-
-                    <div class="hero-trust" aria-label="Características principales">
-                        <span>Envíos a toda México</span>
-                        <span>Venta individual y mayoreo</span>
-                        <span>Atención personalizada</span>
-                    </div>
-                </div>
-
-                <div class="hero-visual reveal" aria-hidden="true">
-                    <div class="hero-card">
-                        <img class="hero-card-logo" src="logo-luxury-hair.png" alt="">
-                        <span class="hero-card-label">Terapia capilar profesional</span>
-                        <strong>Cabello con brillo, suavidad y movimiento.</strong>
-                        <div class="hero-card-line"></div>
-                        <small>Catálogo profesional · Venta individual y mayoreo</small>
-                    </div>
-                </div>
+function productCardTemplate(product) {
+    return `
+        <article class="product-card reveal" data-product-id="${product.id}">
+            <div class="product-image">
+                ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ""}
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    loading="lazy"
+                    width="640"
+                    height="590"
+                    onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}'"
+                >
             </div>
-        </section>
 
-        <section class="stats-section" aria-label="Datos de Luxury Hair">
-            <div class="container stats-grid">
-                <article>
-                    <strong>20</strong>
-                    <span>Productos disponibles</span>
-                </article>
-                <article>
-                    <strong>6</strong>
-                    <span>Categorías profesionales</span>
-                </article>
-                <article>
-                    <strong>MX</strong>
-                    <span>Envíos nacionales</span>
-                </article>
-                <article>
-                    <strong>Pro</strong>
-                    <span>Uso profesional y personal</span>
-                </article>
-            </div>
-        </section>
+            <div class="product-content">
+                <span class="product-category">${product.categoryLabel}</span>
+                <h3>${product.name}</h3>
+                <p class="product-presentation">${product.presentation}</p>
+                <p class="product-description">${product.description}</p>
 
-        <section class="catalog-section" id="productos">
-            <div class="container">
-                <div class="section-heading reveal">
-                    <span class="eyebrow">Catálogo</span>
-                    <h2>Encuentra el tratamiento ideal</h2>
-                    <p>Busca por nombre o filtra el catálogo por categoría.</p>
+                <div class="price-list">
+                    ${priceLinesTemplate(product.prices)}
                 </div>
 
-                <div class="catalog-toolbar reveal">
-                    <label class="search-box" for="buscar">
-                        <span aria-hidden="true">⌕</span>
-                        <input type="search" id="buscar" placeholder="Buscar keratina, kit, sérum..." autocomplete="off">
-                    </label>
+                <div class="product-actions">
+                    <button class="info-button" type="button" data-open-product="${product.id}">
+                        Ver información
+                    </button>
 
-                    <p class="product-counter" id="productCounter" aria-live="polite"></p>
-                </div>
-
-                <div class="filter-buttons reveal" id="filterButtons" aria-label="Filtrar productos">
-                    <button type="button" class="filter-btn active" data-category="todos">Todos</button>
-                    <button type="button" class="filter-btn" data-category="cremas">Cremas y sérums</button>
-                    <button type="button" class="filter-btn" data-category="kits">Kits</button>
-                    <button type="button" class="filter-btn" data-category="alisados">Alisados</button>
-                    <button type="button" class="filter-btn" data-category="keratinas">Keratinas</button>
-                    <button type="button" class="filter-btn" data-category="tratamientos">Tratamientos</button>
-                    <button type="button" class="filter-btn" data-category="herramientas">Herramientas</button>
-                </div>
-
-                <div class="products-grid" id="productsGrid"></div>
-
-                <div class="empty-state" id="emptyState" hidden>
-                    <h3>No encontramos ese producto</h3>
-                    <p>Prueba con otro nombre o selecciona “Todos”.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="wholesale-section" id="mayoreo">
-            <div class="container wholesale-grid">
-                <div class="wholesale-copy reveal">
-                    <span class="eyebrow">Precios especiales</span>
-                    <h2>Compra para tu salón o negocio</h2>
-                    <p>
-                        Varios productos cuentan con precio por mayoreo, paquetes y presentaciones
-                        profesionales. Escríbenos para confirmar disponibilidad y armar tu pedido.
-                    </p>
-
-                    <div class="check-list">
-                        <span>Precios por volumen</span>
-                        <span>Atención para estilistas</span>
-                        <span>Envíos a toda la República</span>
-                    </div>
-
-                    <a data-whatsapp-wholesale target="_blank" rel="noopener noreferrer" class="btn btn-gold">
-                        Solicitar precio de mayoreo
+                    <a
+                        class="buy-button"
+                        href="${whatsappUrl(productWhatsappMessage(product))}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Comprar
                     </a>
                 </div>
-
-                <div class="wholesale-panel reveal">
-                    <p class="panel-kicker">Atención profesional</p>
-                    <h3>¿No sabes cuál tratamiento elegir?</h3>
-                    <p>
-                        Cuéntanos el tipo y estado del cabello. Te ayudaremos a identificar
-                        las opciones más adecuadas del catálogo.
-                    </p>
-                    <div class="panel-note">La recomendación final debe considerar una evaluación profesional del cabello.</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-section" id="nosotros">
-            <div class="container about-grid">
-                <div class="about-visual reveal" aria-hidden="true">
-                    <div class="about-orbit"></div>
-                    <div class="about-mark">LH</div>
-                </div>
-
-                <div class="about-copy reveal">
-                    <span class="eyebrow">Luxury Hair</span>
-                    <h2>Productos para profesionales y público general</h2>
-                    <p>
-                        Nuestro catálogo reúne tratamientos para alisar, hidratar, reparar,
-                        definir rizos y mantener procesos capilares.
-                    </p>
-                    <p>
-                        Cada ficha muestra presentaciones, precios y beneficios para que puedas
-                        comparar opciones antes de contactarnos.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="faq-section" id="preguntas">
-            <div class="container faq-container">
-                <div class="section-heading reveal">
-                    <span class="eyebrow">Preguntas frecuentes</span>
-                    <h2>Antes de hacer tu pedido</h2>
-                </div>
-
-                <div class="faq-list reveal">
-                    <article class="faq-item">
-                        <button type="button" class="faq-question" aria-expanded="false">
-                            ¿Hacen envíos a toda la República Mexicana?
-                            <span>+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Sí. El costo y tiempo de envío se confirman al momento de realizar el pedido.</p>
-                        </div>
-                    </article>
-
-                    <article class="faq-item">
-                        <button type="button" class="faq-question" aria-expanded="false">
-                            ¿Venden a estilistas y también al público?
-                            <span>+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Sí. Hay productos para uso profesional y otros que también pueden utilizarse como mantenimiento en casa.</p>
-                        </div>
-                    </article>
-
-                    <article class="faq-item">
-                        <button type="button" class="faq-question" aria-expanded="false">
-                            ¿Cómo sé qué tratamiento necesita mi cabello?
-                            <span>+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Escríbenos por WhatsApp con información sobre tu tipo de cabello y procesos previos. Para procedimientos químicos, se recomienda una valoración profesional.</p>
-                        </div>
-                    </article>
-
-                    <article class="faq-item">
-                        <button type="button" class="faq-question" aria-expanded="false">
-                            ¿Los precios pueden cambiar?
-                            <span>+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Los precios publicados sirven como referencia. Confirma precio, existencia y promociones antes de realizar el pago.</p>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="contact-section" id="contacto">
-            <div class="container contact-card reveal">
-                <div>
-                    <span class="eyebrow">Contacto</span>
-                    <h2>¿Lista para elegir tus productos?</h2>
-                    <p>Escríbenos por WhatsApp y recibe atención para compra individual o mayoreo.</p>
-                </div>
-
-                <a data-whatsapp-general target="_blank" rel="noopener noreferrer" class="btn btn-gold">
-                    Contactar ahora
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div>
-                <a href="#inicio" class="logo brand-link footer-logo" aria-label="Luxury Hair, ir al inicio">
-                    <img src="logo-luxury-hair-horizontal.png" alt="Luxury Hair Terapia Capilar">
-                </a>
-                <p>Terapia capilar profesional.</p>
-            </div>
-
-            <div class="footer-links">
-                <a href="#productos">Productos</a>
-                <a href="#mayoreo">Mayoreo</a>
-                <a href="#preguntas">Preguntas</a>
-                <a href="#contacto">Contacto</a>
-            </div>
-        </div>
-
-        <div class="container footer-bottom">
-            <span>Envíos a toda la República Mexicana</span>
-            <span>© <span id="currentYear"></span> Luxury Hair</span>
-        </div>
-    </footer>
-
-    <a class="floating-whatsapp" data-whatsapp-general target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
-        <span>WA</span>
-    </a>
-
-    <button class="back-to-top" id="backToTop" type="button" aria-label="Volver arriba">↑</button>
-
-    <div class="modal" id="productModal" aria-hidden="true">
-        <div class="modal-backdrop" data-close-modal></div>
-
-        <article class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <button class="modal-close" type="button" data-close-modal aria-label="Cerrar">&times;</button>
-
-            <div class="modal-image-wrap">
-                <img id="modalImage" src="" alt="">
-                <span class="modal-badge" id="modalBadge" hidden></span>
-            </div>
-
-            <div class="modal-content">
-                <span class="modal-category" id="modalCategory"></span>
-                <h2 id="modalTitle"></h2>
-                <p class="modal-presentation" id="modalPresentation"></p>
-                <p id="modalDescription"></p>
-
-                <div class="modal-section modal-variant-section" id="modalVariantSection" hidden>
-                    <h3 id="modalVariantLabel">Elige una opción</h3>
-                    <div id="modalVariants" class="variant-options"></div>
-                </div>
-
-                <div class="modal-section">
-                    <h3>Precios y presentaciones</h3>
-                    <div id="modalPrices" class="modal-prices"></div>
-                </div>
-
-                <div class="modal-section">
-                    <h3>¿Para qué sirve?</h3>
-                    <ul id="modalBenefits"></ul>
-                </div>
-
-                <div class="modal-section" id="modalIdealSection">
-                    <h3>Ideal para</h3>
-                    <ul id="modalIdeal"></ul>
-                </div>
-
-                <div class="modal-note" id="modalNote" hidden></div>
-
-                <a id="modalWhatsapp" class="btn btn-gold modal-whatsapp" target="_blank" rel="noopener noreferrer">
-                    Consultar por WhatsApp
-                </a>
             </div>
         </article>
-    </div>
+    `;
+}
 
-    <noscript>
-        <div class="noscript-message">Activa JavaScript para visualizar el catálogo completo.</div>
-    </noscript>
-</body>
-</html>
+function getFilteredProducts() {
+    const search = normalizeText(state.search);
+
+    return products.filter(product => {
+        const matchesCategory = state.category === "todos" || product.category === state.category;
+        const searchableText = normalizeText([
+            product.name,
+            product.categoryLabel,
+            product.presentation,
+            product.description,
+            ...product.benefits,
+            ...product.ideal
+        ].join(" "));
+
+        return matchesCategory && searchableText.includes(search);
+    });
+}
+
+function renderProducts() {
+    const filteredProducts = getFilteredProducts();
+
+    elements.grid.innerHTML = filteredProducts.map(productCardTemplate).join("");
+    elements.counter.textContent = `${filteredProducts.length} ${filteredProducts.length === 1 ? "producto" : "productos"}`;
+    elements.emptyState.hidden = filteredProducts.length > 0;
+
+    document.querySelectorAll("[data-open-product]").forEach(button => {
+        button.addEventListener("click", () => {
+            openProductModal(Number(button.dataset.openProduct));
+        });
+    });
+
+    observeRevealElements();
+}
+
+function setActiveFilter(category) {
+    document.querySelectorAll(".filter-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.category === category);
+    });
+}
+
+function openProductModal(productId) {
+    const product = products.find(item => item.id === productId);
+    if (!product) return;
+
+    elements.modalImage.src = product.image;
+    elements.modalImage.alt = product.name;
+    elements.modalImage.onerror = () => {
+        elements.modalImage.onerror = null;
+        elements.modalImage.src = FALLBACK_IMAGE;
+    };
+
+    if (product.badge) {
+        elements.modalBadge.hidden = false;
+        elements.modalBadge.textContent = product.badge;
+    } else {
+        elements.modalBadge.hidden = true;
+        elements.modalBadge.textContent = "";
+    }
+
+    elements.modalCategory.textContent = product.categoryLabel;
+    elements.modalTitle.textContent = product.name;
+    elements.modalPresentation.textContent = product.presentation;
+    elements.modalDescription.textContent = product.description;
+    elements.modalPrices.innerHTML = priceLinesTemplate(product.prices, true);
+    elements.modalBenefits.innerHTML = product.benefits.map(item => `<li>${item}</li>`).join("");
+
+    if (product.ideal.length) {
+        elements.modalIdealSection.hidden = false;
+        elements.modalIdeal.innerHTML = product.ideal.map(item => `<li>${item}</li>`).join("");
+    } else {
+        elements.modalIdealSection.hidden = true;
+        elements.modalIdeal.innerHTML = "";
+    }
+
+    if (product.note) {
+        elements.modalNote.hidden = false;
+        elements.modalNote.textContent = product.note;
+    } else {
+        elements.modalNote.hidden = true;
+        elements.modalNote.textContent = "";
+    }
+
+    elements.modalWhatsapp.href = whatsappUrl(productWhatsappMessage(product));
+
+    elements.modal.classList.add("open");
+    elements.modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+
+    requestAnimationFrame(() => {
+        elements.modal.querySelector(".modal-close").focus();
+    });
+}
+
+function closeProductModal() {
+    elements.modal.classList.remove("open");
+    elements.modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+}
+
+function closeMobileMenu() {
+    elements.menu.classList.remove("open");
+    elements.menuBtn.classList.remove("open");
+    elements.menuBtn.setAttribute("aria-expanded", "false");
+    elements.menuBtn.setAttribute("aria-label", "Abrir menú");
+}
+
+function toggleMobileMenu() {
+    const willOpen = !elements.menu.classList.contains("open");
+
+    elements.menu.classList.toggle("open", willOpen);
+    elements.menuBtn.classList.toggle("open", willOpen);
+    elements.menuBtn.setAttribute("aria-expanded", String(willOpen));
+    elements.menuBtn.setAttribute("aria-label", willOpen ? "Cerrar menú" : "Abrir menú");
+}
+
+let revealObserver;
+
+function observeRevealElements() {
+    if (!("IntersectionObserver" in window)) {
+        document.querySelectorAll(".reveal").forEach(element => element.classList.add("visible"));
+        return;
+    }
+
+    if (!revealObserver) {
+        revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: "0px 0px -40px 0px"
+        });
+    }
+
+    document.querySelectorAll(".reveal:not(.visible)").forEach(element => {
+        revealObserver.observe(element);
+    });
+}
+
+elements.search.addEventListener("input", event => {
+    state.search = event.target.value;
+    renderProducts();
+});
+
+elements.filterButtons.addEventListener("click", event => {
+    const button = event.target.closest(".filter-btn");
+    if (!button) return;
+
+    state.category = button.dataset.category;
+    setActiveFilter(state.category);
+    renderProducts();
+});
+
+elements.menuBtn.addEventListener("click", toggleMobileMenu);
+
+elements.menu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", closeMobileMenu);
+});
+
+document.querySelectorAll("[data-close-modal]").forEach(element => {
+    element.addEventListener("click", closeProductModal);
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeProductModal();
+        closeMobileMenu();
+    }
+});
+
+document.querySelectorAll(".faq-question").forEach(button => {
+    button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const isOpen = item.classList.toggle("open");
+        button.setAttribute("aria-expanded", String(isOpen));
+    });
+});
+
+elements.backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+window.addEventListener("scroll", () => {
+    const isScrolled = window.scrollY > 18;
+    elements.header.classList.toggle("scrolled", isScrolled);
+    elements.backToTop.classList.toggle("visible", window.scrollY > 650);
+}, { passive: true });
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) {
+        closeMobileMenu();
+    }
+});
+
+document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+setGlobalWhatsappLinks();
+renderProducts();
+observeRevealElements();
+
+
+/* =========================================================
+   ACTUALIZACIÓN 2026: LOGO, IMÁGENES UNIFORMES Y VARIANTES
+   ========================================================= */
+
+elements.modalVariantSection = document.getElementById("modalVariantSection");
+elements.modalVariantLabel = document.getElementById("modalVariantLabel");
+elements.modalVariants = document.getElementById("modalVariants");
+
+function productWhatsappMessage(product, variant = null) {
+    const option = variant
+        ? `, ${product.variantMessageLabel || "opción"}: ${variant.label}`
+        : "";
+    const presentation = variant?.presentation || product.presentation;
+    const displayName = variant?.displayName || product.name;
+
+    return `Hola Luxury Hair, me interesa ${displayName}${option} (${presentation}). ¿Me puedes dar más información y confirmar disponibilidad?`;
+}
+
+function variantSummaryTemplate(product) {
+    if (!product.variants?.length) return "";
+
+    return `
+        <button class="product-variant-summary" type="button" data-open-product="${product.id}">
+            <span>${product.variantSummary || `${product.variants.length} opciones disponibles`}</span>
+            <strong>Elegir</strong>
+        </button>
+    `;
+}
+
+function productCardTemplate(product) {
+    const hasVariants = Boolean(product.variants?.length);
+
+    return `
+        <article class="product-card reveal" data-product-id="${product.id}">
+            <div class="product-image">
+                ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ""}
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    loading="lazy"
+                    width="1200"
+                    height="1200"
+                    onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}'"
+                >
+            </div>
+
+            <div class="product-content">
+                <span class="product-category">${product.categoryLabel}</span>
+                <h3>${product.name}</h3>
+                <p class="product-presentation">${product.presentation}</p>
+                <p class="product-description">${product.description}</p>
+
+                ${variantSummaryTemplate(product)}
+
+                <div class="price-list">
+                    ${priceLinesTemplate(product.prices)}
+                </div>
+
+                <div class="product-actions">
+                    <button class="info-button" type="button" data-open-product="${product.id}">
+                        Ver información
+                    </button>
+
+                    ${hasVariants ? `
+                        <button class="buy-button" type="button" data-open-product="${product.id}">
+                            Elegir opción
+                        </button>
+                    ` : `
+                        <a
+                            class="buy-button"
+                            href="${whatsappUrl(productWhatsappMessage(product))}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Comprar
+                        </a>
+                    `}
+                </div>
+            </div>
+        </article>
+    `;
+}
+
+function getFilteredProducts() {
+    const search = normalizeText(state.search);
+
+    return products.filter(product => {
+        const matchesCategory = state.category === "todos" || product.category === state.category;
+        const variantsText = product.variants?.map(variant => [variant.label, variant.presentation, variant.displayName].filter(Boolean).join(" ")) || [];
+        const searchableText = normalizeText([
+            product.name,
+            product.categoryLabel,
+            product.presentation,
+            product.description,
+            ...product.benefits,
+            ...product.ideal,
+            ...variantsText
+        ].join(" "));
+
+        return matchesCategory && searchableText.includes(search);
+    });
+}
+
+function renderProducts() {
+    const filteredProducts = getFilteredProducts();
+
+    elements.grid.innerHTML = filteredProducts.map(productCardTemplate).join("");
+    elements.counter.textContent = `${filteredProducts.length} ${filteredProducts.length === 1 ? "producto" : "productos"}`;
+    elements.emptyState.hidden = filteredProducts.length > 0;
+
+    document.querySelectorAll("[data-open-product]").forEach(button => {
+        button.addEventListener("click", () => {
+            openProductModal(Number(button.dataset.openProduct));
+        });
+    });
+
+    observeRevealElements();
+}
+
+function modalPricesFor(product, variant) {
+    if (variant?.price) {
+        return [{ label: variant.presentation || variant.label, value: variant.price }];
+    }
+    return product.prices;
+}
+
+function applyVariantToModal(product, variant, index = 0) {
+    const image = variant?.image || product.image;
+    const displayName = variant?.displayName || product.name;
+    const presentation = variant?.presentation || product.presentation;
+
+    elements.modalImage.src = image;
+    elements.modalImage.alt = variant ? `${displayName} - ${variant.label}` : displayName;
+    elements.modalImage.onerror = () => {
+        elements.modalImage.onerror = null;
+        elements.modalImage.src = FALLBACK_IMAGE;
+    };
+
+    elements.modalTitle.textContent = displayName;
+    elements.modalPresentation.textContent = presentation;
+    elements.modalPrices.innerHTML = priceLinesTemplate(modalPricesFor(product, variant), true);
+    elements.modalWhatsapp.href = whatsappUrl(productWhatsappMessage(product, variant));
+
+    if (elements.modalVariants) {
+        elements.modalVariants.querySelectorAll(".variant-option").forEach((button, buttonIndex) => {
+            const active = buttonIndex === index;
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-pressed", String(active));
+        });
+    }
+}
+
+function renderVariantSelector(product) {
+    const variants = product.variants || [];
+
+    if (!variants.length) {
+        elements.modalVariantSection.hidden = true;
+        elements.modalVariants.innerHTML = "";
+        applyVariantToModal(product, null);
+        return;
+    }
+
+    elements.modalVariantSection.hidden = false;
+    elements.modalVariantLabel.textContent = product.variantLabel || "Elige una opción";
+    elements.modalVariants.innerHTML = variants.map((variant, index) => `
+        <button
+            class="variant-option ${index === 0 ? "active" : ""}"
+            type="button"
+            data-variant-index="${index}"
+            aria-pressed="${index === 0 ? "true" : "false"}"
+        >
+            ${variant.label}
+        </button>
+    `).join("");
+
+    elements.modalVariants.querySelectorAll("[data-variant-index]").forEach(button => {
+        button.addEventListener("click", () => {
+            const index = Number(button.dataset.variantIndex);
+            applyVariantToModal(product, variants[index], index);
+        });
+    });
+
+    applyVariantToModal(product, variants[0], 0);
+}
+
+function openProductModal(productId) {
+    const product = products.find(item => item.id === productId);
+    if (!product) return;
+
+    if (product.badge) {
+        elements.modalBadge.hidden = false;
+        elements.modalBadge.textContent = product.badge;
+    } else {
+        elements.modalBadge.hidden = true;
+        elements.modalBadge.textContent = "";
+    }
+
+    elements.modalCategory.textContent = product.categoryLabel;
+    elements.modalDescription.textContent = product.description;
+    elements.modalBenefits.innerHTML = product.benefits.map(item => `<li>${item}</li>`).join("");
+
+    if (product.ideal.length) {
+        elements.modalIdealSection.hidden = false;
+        elements.modalIdeal.innerHTML = product.ideal.map(item => `<li>${item}</li>`).join("");
+    } else {
+        elements.modalIdealSection.hidden = true;
+        elements.modalIdeal.innerHTML = "";
+    }
+
+    if (product.note) {
+        elements.modalNote.hidden = false;
+        elements.modalNote.textContent = product.note;
+    } else {
+        elements.modalNote.hidden = true;
+        elements.modalNote.textContent = "";
+    }
+
+    renderVariantSelector(product);
+
+    elements.modal.classList.add("open");
+    elements.modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+
+    requestAnimationFrame(() => {
+        elements.modal.querySelector(".modal-close").focus();
+    });
+}
