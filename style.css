@@ -2210,13 +2210,85 @@ a {
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .show-lh-intro .luxury-intro {
-        display: none;
-    }
+/* En la versión de prueba la animación también se muestra en dispositivos
+   que tengan activada la opción de reducir movimiento. */
 
-    .show-lh-intro,
-    .show-lh-intro body {
-        overflow: auto;
-    }
+/* =========================================================
+   MEJORA PREMIUM DE ASSETS — LOGO E INTRO
+   ========================================================= */
+.brand-link img {
+    width: 74px;
+    height: 64px;
+    padding: 2px;
+    border-radius: 16px;
+    object-fit: contain;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(59, 39, 17, 0.08);
+}
+
+.hero-card-logo {
+    width: min(100%, 390px);
+    max-height: 260px;
+    object-fit: contain;
+    padding: 0;
+    background: #fff;
+}
+
+.intro-products {
+    width: min(92vw, 940px);
+}
+
+.intro-product {
+    width: clamp(150px, 17vw, 235px);
+    height: clamp(360px, 52vh, 610px);
+}
+
+.intro-product img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 28px 22px rgba(54, 34, 13, 0.26));
+}
+
+.intro-logo-wrap {
+    width: clamp(300px, 50vw, 650px);
+    padding: clamp(14px, 2.5vw, 30px);
+    border-radius: 38px;
+    background: rgba(255,255,255,0.96);
+    box-shadow: 0 32px 110px rgba(73, 42, 12, 0.25), 0 0 54px rgba(211, 159, 69, 0.22);
+}
+
+.intro-logo-wrap img {
+    width: 100%;
+    max-width: 590px;
+    max-height: 54vh;
+    object-fit: contain;
+    image-rendering: auto;
+}
+
+.luxury-intro.is-logo-visible .intro-logo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 10%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,223,150,.34), transparent 68%);
+    filter: blur(18px);
+    z-index: -1;
+    animation: premiumLogoGlow 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes premiumLogoGlow {
+    from { opacity: .42; transform: scale(.92); }
+    to { opacity: .9; transform: scale(1.08); }
+}
+
+@media (max-width: 680px) {
+    .brand-link img { width: 58px; height: 52px; }
+    .intro-products { width: 96vw; }
+    .intro-product { width: clamp(105px, 30vw, 145px); height: 43vh; }
+    .intro-product-one { left: 17%; }
+    .intro-product-two { left: 50%; }
+    .intro-product-three { left: 83%; }
+    .intro-logo-wrap { width: min(88vw, 520px); }
 }

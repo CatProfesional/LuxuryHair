@@ -17,22 +17,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="icon" type="image/png" href="logo-luxury-hair.png">
-    <meta property="og:image" content="logo-luxury-hair.png">
+    <link rel="icon" type="image/jpeg" href="logo-luxury-hair-crest-hq.jpg">
+    <meta property="og:image" content="logo-luxury-hair-hq.jpg">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=animacion-premium-1">
     <script>
-        (() => {
-            try {
-                const forceIntro = new URLSearchParams(window.location.search).get("intro") === "1";
-                const introSeen = sessionStorage.getItem("luxuryHairIntroSeen") === "1";
-                document.documentElement.classList.add(forceIntro || !introSeen ? "show-lh-intro" : "skip-lh-intro");
-            } catch (error) {
+        // Mostrar la intro una vez por sesión. Agrega ?intro=1 al enlace para volver a probarla.
+        try {
+            const forceIntro = new URLSearchParams(location.search).get("intro") === "1";
+            const alreadySeen = sessionStorage.getItem("luxuryHairIntroSeen") === "1";
+            if (forceIntro || !alreadySeen) {
                 document.documentElement.classList.add("show-lh-intro");
             }
-        })();
+        } catch (_) {
+            document.documentElement.classList.add("show-lh-intro");
+        }
     </script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=animacion-premium-1" defer></script>
 </head>
 
 <body>
@@ -48,7 +49,7 @@
                     <img src="intro-keratina-japonesa.png" alt="">
                 </figure>
                 <figure class="intro-product intro-product-two">
-                    <img src="intro-keratina-brasilena.png" alt="">
+                    <img src="intro-keratina-marroqui-ultra.png" alt="">
                 </figure>
                 <figure class="intro-product intro-product-three">
                     <img src="intro-keratina-marroqui.png" alt="">
@@ -74,8 +75,7 @@
         </div>
 
         <div class="intro-logo-wrap" id="introLogo" aria-hidden="true">
-            <img src="logo-luxury-hair.png" alt="">
-            <span>Luxury Hair</span>
+            <img src="logo-luxury-hair-hq.jpg" alt="Logo Luxury Hair">
         </div>
     </div>
     <a class="skip-link" href="#productos">Saltar al catálogo</a>
@@ -83,7 +83,7 @@
     <header class="site-header" id="header">
         <div class="container header-inner">
             <a href="#inicio" class="logo brand-link" aria-label="Luxury Hair, ir al inicio">
-                <img src="logo-luxury-hair-horizontal.png" alt="Luxury Hair Terapia Capilar">
+                <img src="logo-luxury-hair-crest-hq.jpg" alt="Luxury Hair Terapia Capilar">
             </a>
 
             <nav class="main-nav" id="menu" aria-label="Navegación principal">
@@ -137,7 +137,7 @@
 
                 <div class="hero-visual reveal" aria-hidden="true">
                     <div class="hero-card">
-                        <img class="hero-card-logo" src="logo-luxury-hair.png" alt="">
+                        <img class="hero-card-logo" src="logo-luxury-hair-hq.jpg" alt="Luxury Hair Terapia Capilar">
                         <span class="hero-card-label">Terapia capilar profesional</span>
                         <strong>Cabello con brillo, suavidad y movimiento.</strong>
                         <div class="hero-card-line"></div>
@@ -329,7 +329,7 @@
         <div class="container footer-grid">
             <div>
                 <a href="#inicio" class="logo brand-link footer-logo" aria-label="Luxury Hair, ir al inicio">
-                    <img src="logo-luxury-hair-horizontal.png" alt="Luxury Hair Terapia Capilar">
+                    <img src="logo-luxury-hair-crest-hq.jpg" alt="Luxury Hair Terapia Capilar">
                 </a>
                 <p>Terapia capilar profesional.</p>
             </div>

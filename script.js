@@ -1138,11 +1138,6 @@ function openProductModal(productId) {
         return;
     }
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        finishIntro(true);
-        return;
-    }
-
     let finished = false;
     const timers = [];
 
@@ -1159,9 +1154,7 @@ function openProductModal(productId) {
     function rememberIntro() {
         try {
             sessionStorage.setItem("luxuryHairIntroSeen", "1");
-        } catch (error) {
-            // La animación sigue funcionando aunque el navegador bloquee sessionStorage.
-        }
+        } catch (_) {}
     }
 
     function moveLogoToHeader() {
