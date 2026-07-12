@@ -21,10 +21,63 @@
     <meta property="og:image" content="logo-luxury-hair.png">
 
     <link rel="stylesheet" href="style.css">
+    <script>
+        (() => {
+            try {
+                const forceIntro = new URLSearchParams(window.location.search).get("intro") === "1";
+                const introSeen = sessionStorage.getItem("luxuryHairIntroSeen") === "1";
+                document.documentElement.classList.add(forceIntro || !introSeen ? "show-lh-intro" : "skip-lh-intro");
+            } catch (error) {
+                document.documentElement.classList.add("show-lh-intro");
+            }
+        })();
+    </script>
     <script src="script.js" defer></script>
 </head>
 
 <body>
+    <div class="luxury-intro" id="luxuryIntro" aria-label="Presentación animada de Luxury Hair">
+        <button class="intro-skip" id="introSkip" type="button">Saltar animación</button>
+
+        <div class="intro-ambient" aria-hidden="true"></div>
+        <div class="intro-stage" aria-hidden="true">
+            <p class="intro-kicker">Terapia capilar profesional</p>
+
+            <div class="intro-products">
+                <figure class="intro-product intro-product-one">
+                    <img src="intro-keratina-japonesa.png" alt="">
+                </figure>
+                <figure class="intro-product intro-product-two">
+                    <img src="intro-keratina-brasilena.png" alt="">
+                </figure>
+                <figure class="intro-product intro-product-three">
+                    <img src="intro-keratina-marroqui.png" alt="">
+                </figure>
+            </div>
+
+            <div class="intro-floor">
+                <span></span>
+            </div>
+        </div>
+
+        <div class="intro-liquid" aria-hidden="true"></div>
+        <div class="intro-liquid-glow" aria-hidden="true"></div>
+        <div class="intro-droplets" aria-hidden="true">
+            <span style="--drop-x:-42vw;--drop-y:-34vh;--drop-size:22px;--drop-delay:0ms"></span>
+            <span style="--drop-x:-28vw;--drop-y:-52vh;--drop-size:13px;--drop-delay:40ms"></span>
+            <span style="--drop-x:-14vw;--drop-y:-42vh;--drop-size:30px;--drop-delay:90ms"></span>
+            <span style="--drop-x:12vw;--drop-y:-55vh;--drop-size:18px;--drop-delay:20ms"></span>
+            <span style="--drop-x:27vw;--drop-y:-44vh;--drop-size:27px;--drop-delay:80ms"></span>
+            <span style="--drop-x:43vw;--drop-y:-31vh;--drop-size:15px;--drop-delay:120ms"></span>
+            <span style="--drop-x:-36vw;--drop-y:-14vh;--drop-size:17px;--drop-delay:60ms"></span>
+            <span style="--drop-x:38vw;--drop-y:-12vh;--drop-size:24px;--drop-delay:30ms"></span>
+        </div>
+
+        <div class="intro-logo-wrap" id="introLogo" aria-hidden="true">
+            <img src="logo-luxury-hair.png" alt="">
+            <span>Luxury Hair</span>
+        </div>
+    </div>
     <a class="skip-link" href="#productos">Saltar al catálogo</a>
 
     <header class="site-header" id="header">

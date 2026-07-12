@@ -1122,3 +1122,110 @@ function openProductModal(productId) {
         elements.modal.querySelector(".modal-close").focus();
     });
 }
+
+
+/* =========================================================
+   INTRO ANIMADA LUXURY HAIR
+   ========================================================= */
+
+(function initLuxuryHairIntro() {
+    const intro = document.getElementById("luxuryIntro");
+    const skipButton = document.getElementById("introSkip");
+    const introLogo = document.getElementById("introLogo");
+    const root = document.documentElement;
+
+    if (!intro || !root.classList.contains("show-lh-intro")) {
+        return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        finishIntro(true);
+        return;
+    }
+
+    let finished = false;
+    const timers = [];
+
+    function schedule(callback, delay) {
+        const timer = window.setTimeout(callback, delay);
+        timers.push(timer);
+    }
+
+    function clearTimers() {
+        timers.forEach(window.clearTimeout);
+        timers.length = 0;
+    }
+
+    function rememberIntro() {
+        try {
+            sessionStorage.setItem("luxuryHairIntroSeen", "1");
+        } catch (error) {
+            // La animación sigue funcionando aunque el navegador bloquee sessionStorage.
+        }
+    }
+
+    function moveLogoToHeader() {
+        const headerLogo = document.querySelector(".site-header .brand-link img");
+        if (!headerLogo || !introLogo) {
+            return;
+        }
+
+        const source = introLogo.getBoundingClientRect();
+        const target = headerLogo.getBoundingClientRect();
+        const sourceCenterX = source.left + source.width / 2;
+        const sourceCenterY = source.top + source.height / 2;
+        const targetCenterX = target.left + target.width / 2;
+        const targetCenterY = target.top + target.height / 2;
+        const scale = Math.max(0.2, Math.min(0.72, target.width / source.width));
+
+        introLogo.style.setProperty("--logo-x", `${targetCenterX - sourceCenterX}px`);
+        introLogo.style.setProperty("--logo-y", `${targetCenterY - sourceCenterY}px`);
+        introLogo.style.setProperty("--logo-scale", scale.toFixed(3));
+        intro.classList.add("is-logo-flying");
+    }
+
+    function finishIntro(immediate = false) {
+        if (finished) return;
+        finished = true;
+        clearTimers();
+        rememberIntro();
+
+        if (immediate) {
+            intro.remove();
+            root.classList.remove("show-lh-intro");
+            root.classList.add("skip-lh-intro");
+            return;
+        }
+
+        intro.classList.add("is-ending");
+        window.setTimeout(() => {
+            intro.remove();
+            root.classList.remove("show-lh-intro");
+            root.classList.add("skip-lh-intro");
+        }, 760);
+    }
+
+    skipButton?.addEventListener("click", () => finishIntro(false));
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !finished) {
+            finishIntro(false);
+        }
+    });
+
+    window.addEventListener("pageshow", event => {
+        if (event.persisted && !finished) {
+            finishIntro(true);
+        }
+    }, { once: true });
+
+    requestAnimationFrame(() => {
+        intro.classList.add("is-playing");
+
+        schedule(() => intro.classList.add("is-impacting"), 1840);
+        schedule(() => intro.classList.add("is-splashing"), 2520);
+        schedule(() => intro.classList.add("is-logo-visible"), 3260);
+        schedule(moveLogoToHeader, 4350);
+        schedule(() => finishIntro(false), 5350);
+    });
+})();

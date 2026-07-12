@@ -1757,3 +1757,466 @@ a {
 @media (max-width: 680px) {
     .brand-link img { width: 145px; height: 50px; }
 }
+
+
+/* =========================================================
+   INTRO ANIMADA LUXURY HAIR
+   ========================================================= */
+
+.show-lh-intro,
+.show-lh-intro body {
+    overflow: hidden;
+}
+
+.luxury-intro {
+    display: none;
+}
+
+.show-lh-intro .luxury-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.96), transparent 34%),
+        linear-gradient(145deg, #f8f1e7 0%, #ead9c3 52%, #d9bd91 100%);
+    opacity: 1;
+    transition: opacity 0.72s ease, visibility 0.72s ease;
+}
+
+.luxury-intro.is-ending {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-skip {
+    position: absolute;
+    top: max(18px, env(safe-area-inset-top));
+    right: max(18px, env(safe-area-inset-right));
+    z-index: 20;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 1px solid rgba(91, 66, 33, 0.24);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.76);
+    color: #4a3520;
+    box-shadow: 0 10px 30px rgba(81, 55, 23, 0.12);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    font: 600 0.78rem/1 Poppins, sans-serif;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.intro-skip:hover {
+    transform: translateY(-2px);
+    background: #ffffff;
+}
+
+.intro-skip:focus-visible {
+    outline: 3px solid rgba(169, 123, 48, 0.38);
+    outline-offset: 3px;
+}
+
+.intro-ambient {
+    position: absolute;
+    inset: -18%;
+    z-index: -2;
+    background:
+        radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.74), transparent 20%),
+        radial-gradient(circle at 80% 18%, rgba(180, 128, 65, 0.17), transparent 24%),
+        radial-gradient(circle at 50% 88%, rgba(255, 244, 225, 0.8), transparent 32%);
+    animation: introAmbient 7s ease-in-out infinite alternate;
+}
+
+.intro-stage {
+    position: absolute;
+    inset: 0;
+}
+
+.intro-kicker {
+    position: absolute;
+    top: clamp(68px, 10vh, 112px);
+    left: 50%;
+    margin: 0;
+    color: rgba(88, 61, 28, 0.72);
+    font: 600 clamp(0.68rem, 1.1vw, 0.84rem)/1.3 Poppins, sans-serif;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+}
+
+.luxury-intro.is-playing .intro-kicker {
+    animation: introKicker 0.9s 0.25s ease forwards;
+}
+
+.intro-products {
+    position: absolute;
+    inset: 0;
+}
+
+.intro-product {
+    --start-rotate: 0deg;
+    --land-rotate: 0deg;
+    position: absolute;
+    bottom: clamp(64px, 12vh, 118px);
+    left: 50%;
+    width: clamp(92px, 12vw, 170px);
+    margin: 0;
+    opacity: 0;
+    transform-origin: 50% 100%;
+    filter: drop-shadow(0 28px 24px rgba(60, 39, 17, 0.25));
+    will-change: transform, opacity;
+}
+
+.intro-product img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 51vh;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.intro-product-one {
+    --start-rotate: -18deg;
+    --land-rotate: -8deg;
+    margin-left: clamp(-250px, -22vw, -150px);
+}
+
+.intro-product-two {
+    --start-rotate: 12deg;
+    --land-rotate: 1deg;
+    z-index: 2;
+    width: clamp(104px, 13.5vw, 190px);
+    margin-left: clamp(-94px, -6.5vw, -54px);
+}
+
+.intro-product-three {
+    --start-rotate: 21deg;
+    --land-rotate: 8deg;
+    margin-left: clamp(72px, 10vw, 150px);
+}
+
+.luxury-intro.is-playing .intro-product-one {
+    animation: introBottleFall 2.05s 0.18s cubic-bezier(0.22, 0.72, 0.22, 1) forwards;
+}
+
+.luxury-intro.is-playing .intro-product-two {
+    animation: introBottleFall 2.05s 0.34s cubic-bezier(0.22, 0.72, 0.22, 1) forwards;
+}
+
+.luxury-intro.is-playing .intro-product-three {
+    animation: introBottleFall 2.05s 0.5s cubic-bezier(0.22, 0.72, 0.22, 1) forwards;
+}
+
+.luxury-intro.is-splashing .intro-product {
+    animation: introProductExit 0.72s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+}
+
+.intro-floor {
+    position: absolute;
+    right: 7vw;
+    bottom: clamp(50px, 9.5vh, 95px);
+    left: 7vw;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(115, 77, 29, 0.22) 16%, rgba(115, 77, 29, 0.36) 50%, rgba(115, 77, 29, 0.22) 84%, transparent);
+    box-shadow: 0 25px 50px rgba(101, 69, 30, 0.17);
+    opacity: 0;
+}
+
+.luxury-intro.is-playing .intro-floor {
+    animation: introFloor 1.1s 0.25s ease forwards;
+}
+
+.intro-floor span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 18vw;
+    height: 18vw;
+    border: 2px solid rgba(156, 108, 45, 0.22);
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.15) rotateX(74deg);
+}
+
+.luxury-intro.is-impacting .intro-floor span {
+    animation: introImpactRing 0.75s ease-out forwards;
+}
+
+.intro-liquid,
+.intro-liquid-glow {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(40px, 8vh, 80px);
+    z-index: 7;
+    width: 15vmax;
+    height: 12vmax;
+    border-radius: 44% 56% 61% 39% / 52% 42% 58% 48%;
+    opacity: 0;
+    transform: translate(-50%, 55%) scale(0.08) rotate(-8deg);
+    transform-origin: center;
+    will-change: transform, opacity, border-radius;
+}
+
+.intro-liquid {
+    background:
+        radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.96) 0 8%, transparent 24%),
+        linear-gradient(135deg, #f8e5d0 0%, #ddb887 34%, #c8955c 64%, #8e5d32 100%);
+    box-shadow:
+        inset 0 0 45px rgba(255, 255, 255, 0.42),
+        0 0 80px rgba(165, 111, 54, 0.24);
+}
+
+.intro-liquid-glow {
+    z-index: 6;
+    background: rgba(255, 243, 222, 0.88);
+    filter: blur(26px);
+}
+
+.luxury-intro.is-splashing .intro-liquid {
+    animation: introLiquidFill 1.12s cubic-bezier(0.18, 0.78, 0.16, 1) forwards;
+}
+
+.luxury-intro.is-splashing .intro-liquid-glow {
+    animation: introLiquidGlow 1.05s ease-out forwards;
+}
+
+.intro-droplets {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+}
+
+.intro-droplets span {
+    position: absolute;
+    left: 50%;
+    bottom: 10vh;
+    width: var(--drop-size);
+    height: calc(var(--drop-size) * 1.35);
+    border-radius: 58% 42% 66% 34% / 68% 38% 62% 32%;
+    background: linear-gradient(155deg, #fff7ec, #d2a067 70%, #9b6637);
+    box-shadow: inset 3px 4px 8px rgba(255, 255, 255, 0.55);
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.25) rotate(25deg);
+}
+
+.luxury-intro.is-splashing .intro-droplets span {
+    animation: introDroplet 0.88s var(--drop-delay) cubic-bezier(0.16, 0.72, 0.25, 1) forwards;
+}
+
+.intro-logo-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 12;
+    display: grid;
+    place-items: center;
+    width: clamp(230px, 34vw, 450px);
+    padding: clamp(18px, 3vw, 34px);
+    border: 1px solid rgba(152, 103, 44, 0.2);
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.91);
+    box-shadow: 0 30px 90px rgba(83, 50, 18, 0.23);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.62);
+    backdrop-filter: blur(18px);
+    will-change: transform, opacity;
+    transition:
+        transform 0.92s cubic-bezier(0.2, 0.74, 0.22, 1),
+        opacity 0.38s ease,
+        border-radius 0.82s ease,
+        background 0.82s ease,
+        box-shadow 0.82s ease,
+        padding 0.82s ease;
+}
+
+.intro-logo-wrap img {
+    display: block;
+    width: min(100%, 310px);
+    height: auto;
+    max-height: 42vh;
+    object-fit: contain;
+}
+
+.intro-logo-wrap span {
+    margin-top: -4px;
+    color: #a87936;
+    font: 600 clamp(0.72rem, 1.2vw, 0.9rem)/1 Poppins, sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.luxury-intro.is-logo-visible .intro-logo-wrap {
+    animation: introLogoReveal 0.82s cubic-bezier(0.18, 0.88, 0.24, 1.2) forwards;
+}
+
+.luxury-intro.is-logo-flying .intro-logo-wrap {
+    padding: 3px 6px;
+    border-color: transparent;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 26px rgba(40, 27, 13, 0.08);
+    transform: translate(calc(-50% + var(--logo-x, 0px)), calc(-50% + var(--logo-y, 0px))) scale(var(--logo-scale, 0.45));
+}
+
+.luxury-intro.is-logo-flying .intro-logo-wrap span {
+    opacity: 0;
+}
+
+@keyframes introAmbient {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1.08) rotate(2deg); }
+}
+
+@keyframes introKicker {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes introBottleFall {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -132vh, 0) rotate(var(--start-rotate)) scale(0.86);
+    }
+    13% { opacity: 1; }
+    67% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(var(--land-rotate)) scale(1);
+    }
+    76% {
+        transform: translate3d(0, -40px, 0) rotate(calc(var(--land-rotate) * -0.65)) scale(1.015, 0.985);
+    }
+    84% {
+        transform: translate3d(0, 0, 0) rotate(var(--land-rotate)) scale(0.985, 1.015);
+    }
+    91% {
+        transform: translate3d(0, -14px, 0) rotate(calc(var(--land-rotate) * -0.3));
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(var(--land-rotate)) scale(1);
+    }
+}
+
+@keyframes introProductExit {
+    0% { opacity: 1; }
+    35% { opacity: 0.96; }
+    100% { opacity: 0; transform: translate3d(0, 18vh, 0) rotate(16deg) scale(1.3); }
+}
+
+@keyframes introFloor {
+    from { opacity: 0; transform: scaleX(0.35); }
+    to { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes introImpactRing {
+    0% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.12) rotateX(74deg); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(2.4) rotateX(74deg); }
+}
+
+@keyframes introLiquidFill {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 55%) scale(0.08) rotate(-8deg);
+    }
+    22% { opacity: 1; }
+    55% {
+        border-radius: 58% 42% 33% 67% / 42% 62% 38% 58%;
+    }
+    100% {
+        opacity: 1;
+        border-radius: 49% 51% 50% 50%;
+        transform: translate(-50%, 40%) scale(18) rotate(14deg);
+    }
+}
+
+@keyframes introLiquidGlow {
+    0% { opacity: 0; transform: translate(-50%, 55%) scale(0.15); }
+    45% { opacity: 0.8; }
+    100% { opacity: 0.2; transform: translate(-50%, 40%) scale(20); }
+}
+
+@keyframes introDroplet {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0.2) rotate(20deg);
+    }
+    12% { opacity: 1; }
+    72% { opacity: 0.96; }
+    100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--drop-x)), var(--drop-y)) scale(1) rotate(190deg);
+    }
+}
+
+@keyframes introLogoReveal {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.62); }
+    68% { opacity: 1; transform: translate(-50%, -50%) scale(1.045); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@media (max-width: 680px) {
+    .intro-kicker {
+        top: 78px;
+        max-width: 72vw;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .intro-product {
+        bottom: 92px;
+        width: clamp(76px, 25vw, 112px);
+    }
+
+    .intro-product-one {
+        margin-left: -42vw;
+    }
+
+    .intro-product-two {
+        width: clamp(84px, 28vw, 124px);
+        margin-left: -14vw;
+    }
+
+    .intro-product-three {
+        margin-left: 17vw;
+    }
+
+    .intro-floor {
+        right: 4vw;
+        bottom: 74px;
+        left: 4vw;
+    }
+
+    .intro-logo-wrap {
+        width: min(78vw, 340px);
+        border-radius: 26px;
+    }
+
+    .intro-skip {
+        top: max(12px, env(safe-area-inset-top));
+        right: max(12px, env(safe-area-inset-right));
+        min-height: 42px;
+        padding: 9px 14px;
+        font-size: 0.7rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .show-lh-intro .luxury-intro {
+        display: none;
+    }
+
+    .show-lh-intro,
+    .show-lh-intro body {
+        overflow: auto;
+    }
+}
